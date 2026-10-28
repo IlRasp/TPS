@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>Convertitore</title>
+    </head>
+    <body>
+
+        <h2>Convertitore Decimale → Binario</h2>
+
+        <form>
+            <label for="number">Inserisci un numero (0-255):</label>
+            <input type="number" id="number" min="0" max="255" required>
+            <input type="button" value="Converti" onclick="convert()">
+        </form>
+
+        <p id="output"></p>
+
+        <script>
+            function convert() {
+                let decimalNumber = parseInt(document.getElementById("number").value);
+                let binaryNumber = "";
+
+                if (decimalNumber === 0) {
+                    binaryNumber = "0";
+                }
+
+                while (decimalNumber > 0) {
+                    binaryNumber = (decimalNumber % 2) + binaryNumber;
+                    decimalNumber = Math.floor(decimalNumber / 2);
+                }
+                document.getElementById("output").textContent = binaryNumber;
+            }
+        </script>
+    </body>
+</html>
