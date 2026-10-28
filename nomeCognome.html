@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <h2>Inserire nome e cognome</h2>
+    </head>
+    <body>
+
+        <form>
+            <label id="lnome" for="nome">Nome:</label> <br>
+            <input id="nome" type="text" style="color: white; background: black"> <br><br>
+
+            <label id="lcognome" for="cognome">Cognome:</label> <br>
+            <input id="cognome" type="text" style="color: white; background: black"> <br><br>
+
+            <label id="lcolore" for="colore">Colore</label> <br>
+            <input type="color" id="colore"> <br><br>
+
+            <input type="button" onclick="enter()" value="Enter">
+        </form>
+
+        <p id="output"></p>
+
+        <script>
+            function enter() {
+                const output = document.getElementById("output")
+                const nome = document.getElementById("nome").value;
+                const cognome = document.getElementById("cognome").value;
+
+                output.style.color = document.getElementById("colore").value
+                output.innerHTML = nome + " " + cognome;
+            }
+        </script>
+    </body>
+</html>
