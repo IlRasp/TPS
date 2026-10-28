@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>Convertitore</title>
+    </head>
+    <body>
+        <h2>Convertitore Decimale → Binario</h2>
+
+        <form>
+            <label for="ip0">Indirizzo IP:</label>
+            <input type="text" id="ip0" size="3">
+
+            <input type="text" id="ip1" size="3">
+
+            <input type="text" id="ip2" size="3">
+
+            <input type="text" id="ip3" size="3"><br><br>
+
+            <label for="prefixLength">Prefix length:</label>
+            <input type="text" id="prefixLength" size="3"><br><br>
+
+            <input type="button" value="Converti" onclick="convert()">
+        </form>
+
+        <p id="output"></p>
+        <p id="indirizzoRete"></p>
+        <p id="indirizzoBroadcast"></p>
+        <p id="indirizziHost"></p>
+
+        <script>
+            function convert() {
+                let ip0 = parseInt(document.getElementById("ip0").value);
+                let ip1 = parseInt(document.getElementById("ip1").value);
+                let ip2 = parseInt(document.getElementById("ip2").value);
+                let ip3 = parseInt(document.getElementById("ip3").value);
+                let prefixLength = parseInt(document.getElementById("prefixLength").value);
+
+                if (ip0 > 255 || ip0 < 0 || ip1 > 255 || ip1 < 0 || ip2 > 255 || ip2 < 0 || ip3 > 255 || ip3 < 0 || prefixLength > 32 || prefixLength < 0) {
+                    document.getElementById("output").innerHTML = "Indirizzo non valido";
+                    return;
+                }
+
+                let binary0 = "";
+                let binary1 = "";
+                let binary2 = "";
+                let binary3 = "";
+                let i;
+
+                i = ip0;
+                while (i > 0) {
+                    binary0 = (i % 2) + binary0;
+                    i = Math.floor(i / 2);
+                }
+
+                i = ip1;
+                while (i > 0) {
+                    binary1 = (i % 2) + binary1;
+                    i = Math.floor(i / 2);
+                }
+
+                i = ip2;
+                while (i > 0) {
+                    binary2 = (i % 2) + binary2;
+                    i = Math.floor(i / 2);
+                }
+
+                i = ip3;
+                while (i > 0) {
+                    binary3 = (i % 2) + binary3;
+                    i = Math.floor(i / 2);
+                }
+
+                while (binary0.length < 8) binary0 = "0" + binary0;
+                while (binary1.length < 8) binary1 = "0" + binary1;
+                while (binary2.length < 8) binary2 = "0" + binary2;
+                while (binary3.length < 8) binary3 = "0" + binary3;
+
+                let subnetMask = "";
+
+                for (let i = 0; i < 32; i++) {
+                    if (i % 8 === 0 && i !== 0) {
+                        subnetMask += " "
+                    }
+                    if (i < prefixLength) {
+                        subnetMask += "1";
+                    } else {
+                        subnetMask += "0";
+                    }
+                }
+
+                let rete = (binary0 + binary1 + binary2 + binary3).substring(0,prefixLength);
+
+                let indirizzoRete = "";
+
+                while (rete.length < 32) rete += "0"
+
+                for (let i = 0; i < rete.length; i++) {
+                    if (i % 8 === 0 && i !== 0) {
+                        indirizzoRete += " ";
+                    }
+                    indirizzoRete += rete.charAt(i);
+                }
+
+                let broadcast = "";
+
+                for (let i = 0; i < 32 - prefixLength; i++) {
+                    broadcast += "1";
+                }
+
+                let indirizzoBroadcast = "";
+
+                while (broadcast.length < 32) broadcast += "0";
+
+                for (let i = 0; i < 32; i++) {
+                    if (i % 8 === 0 && i !== 0) {
+                        indirizzoBroadcast += " ";
+                    }
+                    indirizzoBroadcast += broadcast.charAt(i);
+                }
+
+                document.getElementById("output").innerHTML = "IP binario: " + binary0 + " " + binary1 + " " + binary2 + " " + binary3 + "\nSubnet Mask: " + subnetMask;
+                document.getElementById("indirizzoRete").innerHTML = "Indirizzo di rete: " + indirizzoRete;
+                document.getElementById("indirizzoBroadcast").innerHTML = "Indirizzo di broadcast: " + indirizzoBroadcast;
+                document.getElementById("indirizziHost").innerHTML = "Indirizzi host disponibili: " + (Math.pow(2,32 - prefixLength) - 2);
+            }
+        </script>
+    </body>
+</html>
