@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Convertitore</title>
+    </head>
+    <body>
+        <h2>Convertitore Binario → Esadecimale</h2>
+
+        <form>
+            <label for="number">Inserisci un numero binario:</label>
+            <input type="text" id="number"> <br><br>
+            <input type="button" value="Converti" onclick="convert()">
+        </form>
+
+        <p id="output"></p>
+
+        <br>
+        <a href="index.html">Back to index</a>
+
+        <script>
+            function convert() {
+
+                let binaryNumber = document.getElementById("number").value;
+
+                let esadecimalNumber = "";
+
+                let lunghezza = Math.floor(binaryNumber.length / 4);
+
+                for (let i = 0; i < lunghezza; i++) {
+                    esadecimalNumber = corrispondenza(binaryNumber) + esadecimalNumber;
+                    binaryNumber = binaryNumber.substring(0, binaryNumber.length - 4);
+                }
+            
+                if (binaryNumber.length > 0) {
+                    while (binaryNumber.length < 4) {
+                        binaryNumber = "0" + binaryNumber;
+                    }
+                
+                    esadecimalNumber = corrispondenza(binaryNumber) + esadecimalNumber;
+                }
+
+                document.getElementById("output").innerHTML = "Valore esadecimale: " + esadecimalNumber;
+            }
+
+            // Controlla la corrispondenza tra il quartetto binario e il valore esadecimale
+            function corrispondenza(binaryNumber) {
+                switch (binaryNumber.substring(binaryNumber.length - 4)) {
+                    case "0000": 
+                        return "0"
+                        break
+                    case "0001": 
+                        return "1"
+                        break
+                    case "0010": 
+                        return "2"
+                        break
+                    case "0011": 
+                        return "3"
+                        break
+                    case "0100": 
+                        return "4"
+                        break
+                    case "0101": 
+                        return "5"
+                        break
+                    case "0110": 
+                        return "6"
+                        break
+                    case "0111": 
+                        return "7"
+                        break
+                    case "1000": 
+                        return "8"
+                        break
+                    case "1001": 
+                        return "9"
+                        break
+                    case "1010": 
+                        return "A"
+                        break
+                    case "1011": 
+                        return "B"
+                        break
+                    case "1100": 
+                        return "C"
+                        break
+                    case "1101": 
+                        return "D"
+                        break
+                    case "1110": 
+                        return "E"
+                        break
+                    case "1111": 
+                        return "F"
+                        break
+                    default: 
+                        return "0"
+                }
+            }
+        </script>
+
+    </body>
+</html>
